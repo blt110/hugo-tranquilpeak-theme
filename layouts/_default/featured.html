@@ -1,0 +1,36 @@
+{{ if .Site.Params.thumbnailImage }}
+  {{ if .Params.image }}
+    {{ .Scratch.Set "thumbnailImage" (.Params.image | absURL) }}
+  {{ else }}
+    {{ if or .Params.autothumbnailimage (and .Site.Params.autoThumbnailImage (ne .Params.autothumbnailimage false)) }}
+      {{ if .Params.gallery }}
+        {{ range first 1 .Params.gallery }}
+          {{ range first 1 (split . " ") }}
+            {{ $.Scratch.Set "thumbnailImage" (. | absURL) }}
+          {{ end }}
+        {{ end }}
+      {{ else }}
+        {{ if .Params.coverImage }}
+          {{ if (findRE "^/" .Params.coverImage 1) }}
+            {{ .Scratch.Set "thumbnailImage" (.Params.coverImage | absURL) }}
+          {{ else }}
+            {{ .Scratch.Set "thumbnailImage" (path.Join .RelPermalink .Params.coverImage) }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if or .Params.thumbnailimageposition .Site.Params.thumbnailimageposition }}
+  {{ .Scratch.Set "thumbnailImagePosition" (.Params.thumbnailimageposition | default .Site.Params.thumbnailimageposition) }}
+{{ else }}
+  {{ .Scratch.Set "thumbnailImagePosition" "bottom" }}
+{{ end }}
+<article class="featured">
+	<a href="{{ .Permalink }}" aria-label="{{ if i18n "global.open_post" }}{{ i18n "global.open_post" }}: {{ .Title }}{{ end }}">
+		<div class="img">
+		  <img alt="" src="{{ .Scratch.Get "thumbnailImage" }}"/>
+		<h4>{{.Title}}</h4>
+		</div>
+	</a>
+</article>

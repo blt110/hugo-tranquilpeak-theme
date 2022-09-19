@@ -1,0 +1,23 @@
+#featured-container {
+	display:  flex;
+	flex-wrap: wrap;
+	text-align: center;
+	justify-content: center;
+	max-width: 100%;
+
+	.featured {
+		width:  130px;
+		min-width: 130px;
+		margin: 10px;
+
+		img {
+			max-width: 100%;
+			margin-bottom: 0;
+		}
+	}
+
+	h4 {
+		margin: 0;
+		border: 0;
+	}
+}

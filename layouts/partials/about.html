@@ -10,11 +10,11 @@
     {{ with .Site.Author.bio }}
       <div id="about-card-bio">{{ . | markdownify }}</div>
     {{ end }}
-    {{ with .Site.Author.job }}
+    {{ with .Site.Author.phone }}
       <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
+        <i class="fa fa-phone"></i>
         <br/>
-        {{ . | markdownify }}
+        <a href="tel:{{ . }}">{{ . }}</a>
       </div>
     {{ end }}
     {{ with .Site.Author.location }}

@@ -9,6 +9,14 @@
                {{ if eq .Params.covermeta "out" }}hasCoverMetaOut{{ else }}hasCoverMetaIn{{ end }}
                {{ with .Params.coverCaption }}hasCoverCaption{{ end }}">
         <section class="postShorten-group main-content-wrap">
+          <!-- Featured Content -->
+          <div id="featured-container">
+            {{ range (where .Site.RegularPages "Type" "eq" "featured") }}
+              {{ .Render "featured" }}
+            {{ end }}
+          </div>
+
+          <!-- Paginate content -->
           {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" site.Params.mainSections ) }}
           {{ range $paginator.Pages }}
             {{ .Render "summary" }}
